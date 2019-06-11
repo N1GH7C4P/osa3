@@ -1,0 +1,25 @@
+{
+  "name": "notebackend",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \\\"Error: no test specified\\\" && exit 1",
+    "watch": "nodemon index.js"
+  },
+  "author": "Kimmo",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.25",
+    "morgan": "^1.9.1",
+    "react-moment": "^0.9.2",
+    "react-time": "^4.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}
