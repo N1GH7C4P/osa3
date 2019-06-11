@@ -7,6 +7,7 @@ var morgan = require('morgan')
 app.use(bodyParser.json())
 app.use(morgan('tiny'))
 app.use(cors())
+app.use(express.static('build'))
 
 let now = new Date()
 let persons = 
