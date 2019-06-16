@@ -8,7 +8,7 @@ if ( process.argv.length<3 ) {
 const password = process.argv[2]
 
 const url =
-  `mongodb+srv://Yomyssy:<password>@cluster0-j09qz.mongodb.net/test?retryWrites=true&w=majority`
+  `mongodb+srv://Yomyssy:${password}@cluster0-j09qz.mongodb.net/test?retryWrites=true&w=majority`
 
 mongoose.connect(url, { useNewUrlParser: true })
 
@@ -29,6 +29,4 @@ const note = new Note({
 note.save().then(response => {
   console.log('note saved!');
   mongoose.connection.close();
-}, err => {
-  console.log(err); // Error: "Promise rejected"
-});
+})
