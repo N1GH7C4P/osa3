@@ -29,4 +29,6 @@ const note = new Note({
 note.save().then(response => {
   console.log('note saved!');
   mongoose.connection.close();
-})
+}, err => {
+  console.log(err); // Error: "Promise rejected"
+});
