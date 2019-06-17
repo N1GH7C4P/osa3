@@ -33,7 +33,7 @@ person.save().then(response => {
 
 mongoose.connect(url, { useNewUrlParser: true })
 
-person.find({}).then(result => {
+Person.find({}).then(result => {
   result.forEach(person => {
     console.log(person)
   })
