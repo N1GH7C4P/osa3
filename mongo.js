@@ -28,5 +28,12 @@ const person = new Person({
 
 person.save().then(response => {
   console.log('Contact saved!');
+  person.find({}).then(result => {
+    result.forEach(person => {
+      console.log(person)
+    })
+  })
   mongoose.connection.close();
 })
+
+
