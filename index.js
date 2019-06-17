@@ -8,6 +8,14 @@ const personSchema = new mongoose.Schema({
   number: String,
 })
 
+personSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject._id
+    delete returnedObject.__v
+  }
+})
+
 mongoose.connect(url, { useNewUrlParser: true })
 
 const Person = mongoose.model('Person', personSchema)
@@ -64,7 +72,7 @@ let persons =
 
   app.get('/api/persons', (request, response) => {
     Person.find({}).then(persons => {
-      response.json(persons)
+      response.json(notes.map(note => note.toJSON()))
     })
   })
 
