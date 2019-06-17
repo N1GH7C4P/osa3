@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const url =
-  `mongodb+srv://Yomyssy:${password}@cluster0-j09qz.mongodb.net/test?retryWrites=true&w=majority`
+  `mongodb+srv://Yomyssy:sekred@cluster0-j09qz.mongodb.net/puhelinluettelo?retryWrites=true&w=majority`
 
 const personSchema = new mongoose.Schema({
   name: String,
