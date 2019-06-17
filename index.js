@@ -72,7 +72,7 @@ let persons =
 
   app.get('/api/persons', (request, response) => {
     Person.find({}).then(persons => {
-      response.json(notes.map(note => note.toJSON()))
+      response.json(persons.map(person => person.toJSON()))
     })
   })
 
