@@ -5,6 +5,11 @@ if ( process.argv.length<3 ) {
   process.exit(1)
 }
 
+const personSchema = new mongoose.Schema({
+  name: String,
+  number: String,
+})
+const Person = mongoose.model('Person', personSchema)
 const password = process.argv[2]
 const url =
   `mongodb+srv://Yomyssy:${password}@cluster0-j09qz.mongodb.net/test?retryWrites=true&w=majority`
@@ -15,11 +20,6 @@ mongoose.connect(url, { useNewUrlParser: true })
 if(process.argv.length > 3){  
   const name = process.argv[3]
   const number = process.argv[4]
-  const personSchema = new mongoose.Schema({
-    name: String,
-    number: String,
-  })
-  const Person = mongoose.model('Person', personSchema)
   const person = new Person({
     name: name,
     number: number
