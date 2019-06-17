@@ -5,11 +5,12 @@ if ( process.argv.length<3 ) {
   process.exit(1)
 }
 
+const password = process.argv[2]
 const url =
   `mongodb+srv://Yomyssy:${password}@cluster0-j09qz.mongodb.net/test?retryWrites=true&w=majority`
 
 mongoose.connect(url, { useNewUrlParser: true })
-const password = process.argv[2]
+
 
 if(process.argv.length > 3){  
   const name = process.argv[3]
