@@ -1,3 +1,16 @@
+const mongoose = require('mongoose')
+
+const url =
+  `mongodb+srv://Yomyssy:${password}@cluster0-j09qz.mongodb.net/test?retryWrites=true&w=majority`
+
+const personSchema = new mongoose.Schema({
+  name: String,
+  number: String,
+})
+
+mongoose.connect(url, { useNewUrlParser: true })
+
+const Person = mongoose.model('Person', personSchema)
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
@@ -48,9 +61,11 @@ let persons =
     res.send(`Phonebook has info for ${persons.length} people.<br></br>${now}`)
 
   })
-  
-  app.get('/api/persons', (req, res) => {
-    res.json(persons)
+
+  app.get('/api/persons', (request, response) => {
+    Person.find({}).then(persons => {
+      response.json(persons)
+    })
   })
 
   app.delete('/api/persons/:id', (request, response) => {
