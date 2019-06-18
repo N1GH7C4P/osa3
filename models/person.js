@@ -1,8 +1,7 @@
+require('dotenv').config()
+
 const mongoose = require('mongoose')
-
 const url = process.env.MONGODB_URI
-
-console.log('connecting to', url)
 
 mongoose.connect(url, { useNewUrlParser: true })
   .then(result => {    
@@ -24,5 +23,5 @@ personSchema.set('toJSON', {
       delete returnedObject.__v
     }
   })
-  
+
 module.exports = mongoose.model('NotePerson', personSchema)
