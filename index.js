@@ -12,26 +12,16 @@ app.use(morgan('tiny'))
 app.use(cors())
 app.use(express.static('build'))
 
-app.get('/api/persons/:id', (request, response) => {
+app.get('/puhelinluettelo/people/:id', (request, response) => {
   Person.findById(request.params.id).then(person => {
     response.json(person.toJSON())
   })
 })
 
-app.get('/api/info', (req, res) => {
-  res.send(`Phonebook has info for ${persons.length} people.<br></br>${now}`)
-})
-
-app.get('/api/persons', (request, response) => {
+app.get('/puhelinluettelo/people', (request, response) => {
   Person.find({}).then(persons => {
     response.json(persons.map(person => person.toJSON()))
   })
-})
-
-app.delete('/api/persons/:id', (request, response) => {
-  const id = Number(request.params.id)
-  persons = persons.filter(person => person.id !== id)
-  response.status(204).end()
 })
 
 const generateId = () => {
@@ -40,7 +30,7 @@ const generateId = () => {
   return randomId
 }
 
-app.post('/api/persons', (request, response) => {
+app.post('/puhelinluettelo/people', (request, response) => {
   const body = request.body
 
   if (body.name === undefined || body.number === undefined) {
