@@ -1,24 +1,6 @@
-const mongoose = require('mongoose')
+require('dotenv').config()
 
-const url =
-  `mongodb+srv://Yomyssy:sekred@cluster0-j09qz.mongodb.net/puhelinluettelo?retryWrites=true&w=majority`
-
-const personSchema = new mongoose.Schema({
-  name: String,
-  number: String,
-})
-
-personSchema.set('toJSON', {
-  transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString()
-    delete returnedObject._id
-    delete returnedObject.__v
-  }
-})
-
-mongoose.connect(url, { useNewUrlParser: true })
-
-const Person = mongoose.model('Person', personSchema)
+const Person = require('./models/person')
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
@@ -56,13 +38,9 @@ let persons =
   ]
 
   app.get('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id)
-    const person = persons.find(person => person.id === id)
-    if (person) {
-      response.json(person)
-    } else {
-      response.status(404).end()
-    }
+    Person.findById(request.params.id).then(person => {
+      response.json(person.toJSON())
+    })
   })
 
   app.get('/api/info', (req, res) => {
@@ -91,36 +69,23 @@ let persons =
   
   app.post('/api/persons', (request, response) => {
     const body = request.body
-    
-    if (persons.find(person => person.name === body.name)) {
-        return response.status(400).json({ 
-        error: 'Name must be unique!' 
-      })
-    }
 
-    if (!body.name) {
-      return response.status(400).json({ 
-        error: 'Name missing!' 
-      })
-    }
-    else if (!body.number) {
-      return response.status(400).json({ 
-        error: 'Number missing!' 
-      })
+    if (body.name === undefined || body.number === undefined) {
+      return response.status(400).json({ error: 'Name or number missing!' })
     }
   
-    const newPerson = {
+    const person = new Person ({
       name: body.name,
       number: body.number,
       id: generateId(),
-    }
+    })
   
-    persons = persons.concat(newPerson)
-  
-    response.json(newPerson)
+    person.save().then(savedPerson => {
+      response.json(savedPerson.toJSON())
+    })
   })
 
-  const PORT = process.env.PORT || 3001
-    app.listen(PORT, () => {
+  const PORT = process.env.PORT
+  app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
   })
