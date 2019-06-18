@@ -1,7 +1,6 @@
-require('dotenv').config()
-
 const mongoose = require('mongoose')
-const url = "mongodb+srv://Yomyssy:sekred@cluster0-j09qz.mongodb.net/test?retryWrites=true&w=majority"
+const url = process.env.MONGODB_URI
+console.log('connecting to', url)
 
 mongoose.connect(url, { useNewUrlParser: true })
   .then(result => {    
