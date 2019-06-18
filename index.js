@@ -12,13 +12,13 @@ app.use(morgan('tiny'))
 app.use(cors())
 app.use(express.static('build'))
 
-app.get('/puhelinluettelo/people/:id', (request, response) => {
+app.get('/api/people/:id', (request, response) => {
   Person.findById(request.params.id).then(person => {
     response.json(person.toJSON())
   })
 })
 
-app.get('/puhelinluettelo/people', (request, response) => {
+app.get('/api/people', (request, response) => {
   Person.find({}).then(persons => {
     response.json(persons.map(person => person.toJSON()))
   })
@@ -30,7 +30,7 @@ const generateId = () => {
   return randomId
 }
 
-app.post('/puhelinluettelo/people', (request, response) => {
+app.post('/api/people', (request, response) => {
   const body = request.body
 
   if (body.name === undefined || body.number === undefined) {
