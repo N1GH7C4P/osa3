@@ -1,4 +1,4 @@
-require('dotenv').config({path: __backend + '/.env'})
+console.log(require('dotenv').config())
 
 const Person = require('./models/person')
 const express = require('express')
