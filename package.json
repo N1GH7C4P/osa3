@@ -8,7 +8,6 @@
     "test": "echo \\\"Error: no test specified\\\" && exit 1",
     "watch": "nodemon index.js",
     "deploy": "git push heroku master",
-    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push && npm run deploy",
     "logs:prod": "heroku logs --tail"
   },
   "author": "Kimmo",
