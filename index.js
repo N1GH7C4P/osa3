@@ -38,8 +38,8 @@ app.post('/api/people', (request, response) => {
 })
 
 app.get('/api/people', (request, response) => {
-  Person.find({}).then(persons => {
-    response.json(persons.map(person => person.toJSON()))
+  Person.find({}).then(people => {
+    response.json(people.map(person => person.toJSON()))
   })
 })
 
@@ -56,7 +56,6 @@ app.delete('/api/people/:id', (request, response) => {
   response.status(204).end()
 })
 
-
 const generateId = () => {
   const max = 1000000;
   const randomId = Math.floor(Math.random() * Math.floor(max));
@@ -67,7 +66,7 @@ const unknownEndpoint = (request, response) => {
 }
 app.use(unknownEndpoint)
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
