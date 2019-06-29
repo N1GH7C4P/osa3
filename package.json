@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:ui": "del /f build && cd .. && cd frontend && npm run build --prod && copy build ../../osa3/backend/",
+    "build:ui": "del /f build && cd .. && cd frontend && npm run build && copy build ../backend",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push && npm run deploy", 
     "start": "node index.js",
     "test": "echo \\\"Error: no test specified\\\" && exit 1",
