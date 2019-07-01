@@ -17,26 +17,12 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
 
-const errorHandler = (error, request, response, next) => {
-  console.error(error.message)
-
-  if (error.name === 'CastError' && error.kind == 'ObjectId') {
-    return response.status(400).send({ error: 'malformatted id' })
-  } 
-
-  next(error)
-}
-
-const unknownEndpoint = (request, response) => {
-  response.status(404).send({ error: 'unknown endpoint' })
-}
-
 app.use(express.static('build'))
 app.use(bodyParser.json())
 app.use(morgan('tiny'))
 app.use(cors())
 
-app.post('/api/people', (request, response) => {
+app.post('/api/people', (request, response, next) => {
   const body = request.body
   const person = new Person ({
     name: body.name,
@@ -56,7 +42,7 @@ app.get('/api/people', (request, response) => {
   })
 })
 
-app.get('/api/people/:id', (request, response) => {
+app.get('/api/people/:id', (request, response, next) => {
   Person.findById(request.params.id).then(person => {
     if (person) {       
        response.json(person.toJSON())
@@ -84,12 +70,26 @@ app.put('/api/people/:id', (request, response, next) => {
     number: body.number
   }
 
-  Person.findByIdAndUpdate(request.params.id, person, { new: true })
+  Person.findByIdAndUpdate(request.params.id, person, { new: true }, next)
     .then(updatedPerson => {
       response.json(updatedPerson.toJSON())
     })
     .catch(error => next(error))
 })
+
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' })
+}
+
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message)
+
+  if (error.name === 'CastError' && error.kind == 'ObjectId') {
+    return response.status(400).send({ error: 'malformatted id' })
+  } 
+
+  next(error)
+}
 
 app.use(unknownEndpoint)
 app.use(errorHandler)
