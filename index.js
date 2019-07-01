@@ -6,10 +6,10 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 var morgan = require('morgan')
 
+app.use(express.static('build'))
 app.use(bodyParser.json())
 app.use(morgan('tiny'))
 app.use(cors())
-app.use(express.static('build'))
 
 app.post('/people', (request, response) => {
   const body = request.body
@@ -41,11 +41,12 @@ app.get('/api/people/:id', (request, response) => {
   })
 })
 
-app.delete('/api/people/:id', (request, response) => {
-  const id = Number(request.params.id)
-  people = people.filter(person => person.id !== id)
-
-  response.status(204).end()
+app.delete('/api/people/:id', (request, response, next) => {
+  Person.findByIdAndRemove(request.params.id)
+    .then(result => {
+      response.status(204).end()
+    })
+    .catch(error => next(error))
 })
 
 const generateId = () => {
