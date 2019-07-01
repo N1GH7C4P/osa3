@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+mongoose.set('useFindAndModify', false)
 const url = process.env.MONGODB_URI || "mongodb+srv://Yomyssy:sekred@cluster0-j09qz.mongodb.net/puhelinluettelo?retryWrites=true&w=majority"
 console.log('connecting to', url)
 
