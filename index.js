@@ -10,7 +10,7 @@ app.use(morgan('tiny'))
 app.use(cors())
 app.use(express.static('build'))
 
-app.post('/api/people', (request, response) => {
+app.post('/people', (request, response) => {
   const body = request.body
 
   if (body.name === undefined || body.number === undefined) {
@@ -28,19 +28,19 @@ app.post('/api/people', (request, response) => {
   })
 })
 
-app.get('/api/people', (request, response) => {
+app.get('/people', (request, response) => {
   Person.find({}).then(people => {
     response.json(people.map(person => person.toJSON()))
   })
 })
 
-app.get('/api/people/:id', (request, response) => {
+app.get('/people/:id', (request, response) => {
   Person.findById(request.params.id).then(person => {
     response.json(person.toJSON())
   })
 })
 
-app.delete('/api/people/:id', (request, response) => {
+app.delete('/people/:id', (request, response) => {
   const id = Number(request.params.id)
   people = people.filter(person => person.id !== id)
 
