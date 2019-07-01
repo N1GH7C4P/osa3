@@ -30,11 +30,12 @@ app.post('/api/people', (request, response, next) => {
     id: generateId(),
   })
 
-  person.save().then(savedPerson => {
-    response.json(savedPerson.toJSON())
+  person.save()
+    .then(savedPerson => {
+      response.json(savedPerson.toJSON())
+    })
+    .catch(error => next(error))
   })
-  .catch(error => next(error))
-})
 
 app.get('/api/people', (request, response) => {
   Person.find({}).then(people => {
@@ -86,7 +87,10 @@ const errorHandler = (error, request, response, next) => {
 
   if (error.name === 'CastError' && error.kind == 'ObjectId') {
     return response.status(400).send({ error: 'malformatted id' })
-  } 
+  }
+  else if (error.name === 'ValidationError') {    
+    return response.status(400).json({ error: error.message })
+  }
 
   next(error)
 }
