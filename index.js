@@ -1,3 +1,4 @@
+require('dotenv').config()
 const Person = require('./models/person')
 const express = require('express')
 const app = express()
@@ -28,19 +29,19 @@ app.post('/people', (request, response) => {
   })
 })
 
-app.get('/people', (request, response) => {
+app.get('/api/people', (request, response) => {
   Person.find({}).then(people => {
     response.json(people.map(person => person.toJSON()))
   })
 })
 
-app.get('/people/:id', (request, response) => {
+app.get('/api/people/:id', (request, response) => {
   Person.findById(request.params.id).then(person => {
     response.json(person.toJSON())
   })
 })
 
-app.delete('/people/:id', (request, response) => {
+app.delete('/api/people/:id', (request, response) => {
   const id = Number(request.params.id)
   people = people.filter(person => person.id !== id)
 

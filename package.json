@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build:ui": "del /f build && cd .. && cd frontend && npm run build && copy build ../backend",
-    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push && npm run deploy", 
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push && npm run deploy",
     "start": "node index.js",
     "test": "echo \\\"Error: no test specified\\\" && exit 1",
     "watch": "nodemon index.js",
@@ -16,6 +16,7 @@
   "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.25",

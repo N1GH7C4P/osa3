@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const url = 'mongodb+srv://Yomyssy:o4Vdh61H5baHPwUR@cluster0-j09qz.mongodb.net/puhelinluettelo?retryWrites=true&w=majority'
+const url = process.env.MONGODB_URI
 console.log('connecting to', url)
 
 mongoose.connect(url, { useNewUrlParser: true })
