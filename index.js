@@ -52,6 +52,7 @@ app.post('/api/people', (request, response) => {
   person.save().then(savedPerson => {
     response.json(savedPerson.toJSON())
   })
+  .catch(error => next(error))
 })
 
 app.get('/api/people', (request, response) => {

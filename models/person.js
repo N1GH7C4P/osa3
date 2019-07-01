@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 mongoose.set('useFindAndModify', false)
+var uniqueValidator = require('mongoose-unique-validator')
+
 const url = process.env.MONGODB_URI || "mongodb+srv://Yomyssy:sekred@cluster0-j09qz.mongodb.net/puhelinluettelo?retryWrites=true&w=majority"
 console.log('connecting to', url)
 
@@ -12,9 +14,10 @@ mongoose.connect(url, { useNewUrlParser: true })
   })
 
 const personSchema = new mongoose.Schema({
-    name: String,
-    number: String,
+    name: {type: String, required: true, unique: true},
+    number: {type: String, required: true, unique: false},
 })
+personSchema.plugin(uniqueValidator, { type: 'mongoose-unique-validator' })
 
 personSchema.set('toJSON', {
     transform: (document, returnedObject) => {
