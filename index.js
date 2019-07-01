@@ -38,11 +38,6 @@ app.use(cors())
 
 app.post('/api/people', (request, response) => {
   const body = request.body
-
-  if (body.name === undefined || body.number === undefined) {
-    return response.status(400).json({ error: 'Name or number missing!' })
-  }
-
   const person = new Person ({
     name: body.name,
     number: body.number,
