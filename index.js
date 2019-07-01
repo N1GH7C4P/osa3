@@ -11,7 +11,7 @@ app.use(bodyParser.json())
 app.use(morgan('tiny'))
 app.use(cors())
 
-app.post('/people', (request, response) => {
+app.post('/api/people', (request, response) => {
   const body = request.body
 
   if (body.name === undefined || body.number === undefined) {
