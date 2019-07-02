@@ -14,11 +14,10 @@ mongoose.connect(url, { useNewUrlParser: true })
   })
 
 const personSchema = new mongoose.Schema({
-    name: {type: String, required: true, unique: true},
-    number: {type: String, required: true, unique: false},
+    name: {type: String, required: true, unique: true, minlength: 3, path: username},
+    number: {type: String, required: true, unique: false, minlength: 8, path: phonenumber},
 })
 personSchema.plugin(uniqueValidator, { type: 'mongoose-unique-validator' })
-
 personSchema.set('toJSON', {
     transform: (document, returnedObject) => {
       returnedObject.id = returnedObject._id.toString()
